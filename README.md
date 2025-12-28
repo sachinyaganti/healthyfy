@@ -2,13 +2,25 @@
 
 Healthyfy is an **agentic ML system applied to the healthcare and fitness domain** (non-clinical), delivered as a **non-medical wellness & lifestyle support platform** with:
 
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/7fa6f0ae-49d6-4219-846a-06403c0b0ff8" width="48%" />
   <img src="https://github.com/user-attachments/assets/ad7be33f-bf9e-41df-bc58-b20b337d9fed" width="48%" />
 </p>
 
-> 🚀 **Live Demo**  
-> 👉 https://healthyfy-ai.netlify.app/login
+
+
+<div align="center">
+
+<h2>🌱 Healthyfy — Your Agentic AI Partner for Personalized Wellness</h2>
+
+<pre>
+🔗 https://healthyfy-ai.netlify.app/login
+</pre>
+
+</div>
+
+
 
 <img width="1919" height="1000" alt="image" src="https://github.com/user-attachments/assets/8951c6d7-1485-4346-a3ed-0a479f1b730d" />
 
