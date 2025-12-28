@@ -1,26 +1,122 @@
 # Healthyfy
 
-Healthyfy is a **non-medical wellness & lifestyle support platform**.
+Healthyfy is an **agentic ML system applied to the healthcare and fitness domain** (non-clinical), delivered as a **non-medical wellness & lifestyle support platform** with:
 
-**Disclaimer:** Healthyfy provides wellness and lifestyle support only. It does **NOT** diagnose, treat, or replace professional medical advice.
+- A Vite/React frontend for daily logging, dashboards, and a floating chatbot
+- A FastAPI backend that provides “AI-style” coaching endpoints (with safety guardrails)
+- Optional MySQL persistence (SQLAlchemy) and local retrieval (FAISS or a Windows-safe fallback)
 
-## Tech Stack
+**Disclaimer (important):** Healthyfy provides wellness and lifestyle support only. It does **not** diagnose, treat, prescribe, or replace professional medical advice.
 
-- Frontend: Vite + React, Tailwind CSS, Framer Motion, floating chatbot
+## Why this is an “agentic ML system”
+
+Healthyfy is designed around an **agentic backend**: user requests are routed through an orchestrator, guarded by safety rules, and handled by specialized “domain agents” (fitness, nutrition, mental wellness, chronic support, and goal coaching). The system combines:
+
+- **Decision logic** (routing + safety guardrails)
+- **Agentic planning/autonomy** (Goal Coach plan generation + iterative check-ins)
+- **ML** (a lightweight forecasting endpoint)
+- **LLM integration (optional)** via a pluggable client (can run offline)
+
+This is intentionally scoped to wellness and fitness support rather than clinical decision-making.
+
+## What the system does (functionality)
+
+- **Unified wellness dashboard**: fitness, nutrition, mental wellness, and chronic-support tracking in one place.
+- **Local logging + insights**: most user logs are stored in the browser (localStorage) and summarized into small “insights”.
+- **AI quick suggestions**: one-click calls to backend endpoints for:
+	- Fitness plan suggestions
+	- Nutrition plan suggestions
+	- Guided breathing session text
+	- Journal prompts
+	- Chronic-condition support suggestions
+- **Goal Coach loop**: create a goal plan, then submit periodic check-ins to adapt it.
+- **Wellness retrieval**: retrieve relevant snippets from seed wellness documents (FAISS when available; deterministic fallback on Windows).
+
+## System assumptions
+
+- **Not medical**: responses are constrained to non-medical lifestyle guidance; guardrails should redirect medical questions.
+- **Auth is frontend-only**: login/register is implemented client-side (localStorage). The backend does not validate sessions/tokens.
+- **User data storage**:
+	- Primary: browser localStorage for most logs and the “session”.
+	- Coach plans: persisted as JSON (defaults to `data/coach_plans.json`).
+	- Database: MySQL is optional for dev; the backend will still start if DB isn’t available (DB initialization is skipped).
+- **Vector search on Windows**: FAISS may be unavailable locally. In that case, retrieval uses a deterministic embedding fallback (runnable everywhere, but less semantically accurate).
+
+## Tech stack
+
+- Frontend: Vite + React, Tailwind CSS, Framer Motion
 - Backend: Python 3.10+, FastAPI, Uvicorn, Pydantic
-- DB: MySQL (via SQLAlchemy ORM)
-- Vector DB: FAISS (local index for retrieval)
-- AI: Hosted LLM (abstracted via backend service layer) + tool-style orchestration + rule-based guardrails
+- DB: MySQL (SQLAlchemy + PyMySQL)
+- Retrieval: FAISS (when available) + local fallback on Windows
 
-## Folder Structure
+## Repo structure
 
-- frontend/
-- backend/
-- docker-compose.yml
+- `frontend/` — React app
+- `backend/` — FastAPI app
+- `docker-compose.yml` — MySQL + backend container (dev)
 
-## Running (Dev)
+## How to run (local development)
 
-### 1) Start MySQL + Backend
+You have two supported ways to run the app locally.
+
+### Option A — Run using VS Code Tasks (this matches what you just did)
+
+This is the easiest path if you already have a Python venv set up and Node dependencies installed.
+
+1) Start the backend task: **`backend:dev`**
+
+- Runs Uvicorn with:
+	- Host: `127.0.0.1`
+	- Port: `8004`
+	- App dir: `backend/`
+- Sets these env vars for you:
+	- `DATABASE_URL=mysql+pymysql://healthyfy:healthyfy@127.0.0.1:3306/healthyfy`
+	- `COACH_DATA_DIR=<repo>/data`
+
+2) Start the frontend task: **`frontend:dev`**
+
+- Runs Vite with:
+	- Host: `127.0.0.1`
+	- Port: `5173`
+- Sets `VITE_API_BASE=http://127.0.0.1:8004` so the frontend talks to the backend task.
+
+3) Open the app:
+
+- Frontend: `http://127.0.0.1:5173/`
+- Backend health: `http://127.0.0.1:8004/health`
+- Backend API docs: `http://127.0.0.1:8004/docs`
+
+If MySQL isn’t running, the backend still starts, but DB-backed features may be limited.
+
+## Implementation notes (prototype / demo / workflow)
+
+This repository contains a working prototype with an executable workflow:
+
+- **Frontend demo**: open `http://127.0.0.1:5173/` and use the unified dashboard + chatbot UI.
+- **Backend demo**: open `http://127.0.0.1:8004/docs` to run endpoints interactively.
+
+Suggested demo script (end-to-end):
+
+1) Start backend + frontend (Option A above).
+2) In the UI, register/login (demo auth) and open the Unified Dashboard.
+3) Trigger **AI quick suggestions** (fitness/nutrition/breathing/journal/chronic) to demonstrate agent routing to domain endpoints.
+4) Create a **Goal Coach** plan, then submit one or more check-ins to demonstrate autonomous plan adaptation over time.
+5) (Optional) Call wellness retrieval (`/api/wellness/retrieve`) to demonstrate knowledge retrieval over seed docs.
+6) (Optional) Call ML forecast (`/api/ml/forecast`) to demonstrate a simple predictive model endpoint.
+
+## ML models, LLMs, and decision logic
+
+- **ML model (forecasting):** `POST /api/ml/forecast` implements a simple time-series trend forecast (lightweight regression-style approach). It’s intentionally simple to keep the prototype runnable and explainable.
+- **LLM usage (optional):** the backend supports calling a hosted LLM through a dedicated client. If no API key is configured, the system operates in a deterministic/offline mode.
+- **Decision logic:** safety guardrails and orchestrator routing determine which domain agent/endpoint should handle a request and enforce non-medical constraints.
+
+## Agentic reasoning, planning, and autonomy (what is demonstrated)
+
+- **Orchestrated agent routing:** chat and “quick suggestion” actions are handled by domain-specific capabilities rather than a single monolithic prompt.
+- **Planning loop:** Goal Coach creates a structured plan and then updates/adapts it based on follow-up check-ins (a minimal example of autonomous behavior over time).
+- **Guardrails-first behavior:** safety logic restricts outputs to wellness guidance and steers away from clinical diagnosis/treatment.
+
+### Option B — Run with Docker Compose (MySQL + backend)
 
 From the repo root:
 
@@ -28,13 +124,10 @@ From the repo root:
 docker compose up --build
 ```
 
-Backend runs at:
-- http://localhost:8000
-- Health check: http://localhost:8000/health
+- Backend: `http://localhost:8000`
+- Health: `http://localhost:8000/health`
 
-Note: If you run the backend via the VS Code task `backend:dev`, it runs on `http://127.0.0.1:8004` by default (to avoid clashing with Docker on `8000`).
-
-### 2) Run Frontend
+Then run the frontend separately:
 
 ```bash
 cd frontend
@@ -42,81 +135,96 @@ npm install
 npm run dev
 ```
 
-Frontend runs at:
-- http://localhost:5173
+Frontend default is `http://localhost:5173` and will call `http://localhost:8000` unless you override `VITE_API_BASE`.
 
-## Environment Variables
+## Environment variables
 
-### Backend (optional hosted LLM)
+### Backend
 
-Set these on the backend container (docker-compose.yml) or locally:
+- `DATABASE_URL` — MySQL connection string
+- `CORS_ORIGINS` — comma-separated allowed origins (defaults to `http://localhost:5173` and `http://127.0.0.1:5173` in dev)
+- `VECTOR_DATA_DIR` — where the vector index + metadata live (defaults to `./data`)
+- `COACH_DATA_DIR` — where coach state is written (defaults to repo-root `data/`)
+
+Optional hosted LLM configuration:
 
 - `LLM_API_KEY` (required to enable hosted LLM)
 - `LLM_BASE_URL` (default `https://api.openai.com/v1`)
 - `LLM_MODEL` (default `gpt-4o-mini`)
 
-If `LLM_API_KEY` is not set, Healthyfy runs in **offline mode** with deterministic, non-medical wellness guidance.
-
-### Backend (local data directory)
-
-- `VECTOR_DATA_DIR` — where the FAISS index + metadata are stored (defaults to `./data`)
-- `COACH_DATA_DIR` — where Goal Coach state is stored (defaults to repo-root `data/`)
-
-Goal Coach persists to `data/coach_plans.json` by default.
+If `LLM_API_KEY` is not set, Healthyfy runs in an **offline/deterministic mode**.
 
 ### Frontend
 
-- `VITE_API_BASE` (default `http://localhost:8000`)
+- `VITE_API_BASE` — backend base URL (defaults to `http://localhost:8000`)
 
-If you use the VS Code tasks (`backend:dev` + `frontend:dev`), the `frontend:dev` task sets `VITE_API_BASE` to `http://127.0.0.1:8004` automatically.
-
-Example (PowerShell):
+PowerShell example:
 
 ```powershell
-$env:VITE_API_BASE="http://localhost:8000"
+$env:VITE_API_BASE = "http://127.0.0.1:8004"
 ```
 
-## Deploy (Netlify)
+## Example interaction flows
 
-Netlify is a great fit for the **frontend** (Vite/React). The **backend** (FastAPI) must be deployed separately (e.g., Render/Fly.io/Azure/App Service/etc.) and then referenced from the frontend via `VITE_API_BASE`.
+### Flow 1 — Login/Register (demo auth)
 
-### Netlify settings
+1) Open the frontend and create a user in the Register page.
+2) Login; the session is stored in localStorage.
+3) Navigate to the Unified Dashboard.
 
-This repo includes a Netlify config at [netlify.toml](netlify.toml).
+### Flow 2 — Daily tracking → insights
 
-- **Base directory**: `frontend`
-- **Build command**: `npm ci && npm run build`
-- **Publish directory**: `frontend/dist`
+1) Log items (meals, water, mood, workouts, symptoms, reminders).
+2) View domain dashboards and the unified dashboard KPIs.
+3) Insights update immediately because the data is localStorage-backed.
 
-### Required environment variables (Netlify)
+### Flow 3 — “AI quick suggestions”
 
-In Netlify → Site configuration → Environment variables:
+1) In the Unified Dashboard, choose an action (fitness plan / nutrition plan / breathing / journal / chronic support).
+2) The frontend calls the backend (e.g., `/api/fitness/plan`).
+3) The backend returns structured guidance and the UI displays it.
 
-- `VITE_API_BASE` = your deployed backend URL (example: `https://healthyfy-api.yourdomain.com`)
+### Flow 4 — Goal Coach plan + check-ins
 
-### Backend CORS (required)
+1) Create a goal plan (e.g., “walk 30 min daily for 7 days”).
+2) Receive a plan ID.
+3) Submit check-ins with adherence and notes; the backend updates the plan.
+4) The plan state persists to JSON in `data/coach_plans.json` by default.
 
-On your backend hosting, set:
+## Key API endpoints
 
-- `CORS_ORIGINS` = your Netlify site origin (example: `https://your-site.netlify.app`)
-
-You can provide multiple origins as a comma-separated list.
-
-## Key API Endpoints
-
-- `POST /api/chat` — agentic chat (guardrails + orchestrator + domain agents)
+- `GET /health`
+- `POST /api/chat` — orchestrated chatbot (guardrails + domain agents)
 - `POST /api/fitness/plan`
 - `POST /api/nutrition/plan`
 - `POST /api/mental/breathing`
 - `GET /api/mental/journal-prompt`
 - `POST /api/chronic/support`
-- `POST /api/wellness/retrieve` — FAISS retrieval over seed wellness docs
-- `POST /api/ml/forecast` — simple ML trend forecast (linear regression)
-- `POST /api/coach/goal` — create a goal plan (agent loop)
-- `POST /api/coach/checkin` — check-in and adapt the plan
+- `POST /api/wellness/retrieve` — retrieval over seed wellness docs
+- `POST /api/ml/forecast` — simple trend forecast (linear regression)
+- `POST /api/coach/goal` — create a goal plan
+- `POST /api/coach/checkin` — submit a check-in
 - `GET /api/coach/state/{plan_id}` — fetch persisted plan state
 
-## Notes
+## Limitations
 
-- Healthyfy intentionally avoids medical diagnosis, prescriptions, or treatment advice.
-- If users ask medical questions, the backend guardrails will redirect to professional care.
+- **Security/auth**: frontend-only auth (localStorage) is not production-safe; backend does not enforce identity.
+- **Medical scope**: intentionally constrained to wellness guidance; not a clinical tool.
+- **Vector search quality on Windows**: deterministic fallback is runnable but less semantically accurate than real embeddings/FAISS.
+- **Persistence model**: much of the user data is local to the browser; clearing storage clears most history.
+- **Single-node architecture**: local file persistence (coach JSON, vector cache) isn’t shared across instances.
+
+## Future improvements
+
+- Replace demo auth with real authentication (server-issued sessions/JWT, password reset, RBAC).
+- Move logs/history to a proper backend store (per-user DB tables), add export/import.
+- Add proper embeddings + hosted/vector database option (e.g., pgvector, Pinecone) for better retrieval.
+- Add structured evaluation tests for guardrails and agent outputs.
+- Add observability (request tracing, prompt logging with redaction, metrics).
+
+## Deploy (high level)
+
+- Frontend can be deployed to Netlify (see `netlify.toml`).
+- Backend must be deployed separately (Render/Fly.io/Azure/App Service/etc.).
+- Set `VITE_API_BASE` in the frontend environment to point to the deployed backend.
+- Configure backend `CORS_ORIGINS` to include your frontend origin.

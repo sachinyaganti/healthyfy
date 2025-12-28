@@ -6,8 +6,15 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
 
-import faiss
 import numpy as np
+
+try:
+    import faiss  # type: ignore
+
+    _HAS_FAISS = True
+except Exception:  # pragma: no cover
+    faiss = None
+    _HAS_FAISS = False
 
 
 @dataclass
@@ -48,21 +55,60 @@ class FaissVectorStore:
         self.index_path = self.data_dir / "healthyfy.faiss"
         self.meta_path = self.data_dir / "healthyfy.meta.json"
 
-        self.index = faiss.IndexFlatIP(dim)
+        # Used when FAISS isn't available (e.g., Windows local dev).
+        self._embeddings_path = self.data_dir / "healthyfy.embeddings.npy"
+        self._embeddings: np.ndarray | None = None
+
+        if _HAS_FAISS:
+            self.index = faiss.IndexFlatIP(dim)
+        else:
+            # Keep API parity with FAISS's IndexFlatIP for startup checks (index.ntotal)
+            class _DummyIndex:
+                def __init__(self) -> None:
+                    self.ntotal = 0
+
+            self.index = _DummyIndex()
         self._chunks: list[DocChunk] = []
 
-        if self.index_path.exists() and self.meta_path.exists():
+        if self.meta_path.exists() and (self.index_path.exists() or (not _HAS_FAISS)):
             self._load()
 
     def _load(self) -> None:
-        self.index = faiss.read_index(str(self.index_path))
         meta = json.loads(self.meta_path.read_text(encoding="utf-8"))
         self._chunks = [DocChunk(**c) for c in meta.get("chunks", [])]
 
+        if _HAS_FAISS:
+            if self.index_path.exists():
+                self.index = faiss.read_index(str(self.index_path))
+        else:
+            # Load cached embeddings when present; otherwise regenerate (deterministic).
+            if self._embeddings_path.exists():
+                self._embeddings = np.load(self._embeddings_path)
+            else:
+                if self._chunks:
+                    self._embeddings = np.stack(
+                        [_stable_hash_embedding(c.text, self.dim) for c in self._chunks]
+                    ).astype(np.float32)
+                else:
+                    self._embeddings = np.zeros((0, self.dim), dtype=np.float32)
+            self.index.ntotal = int(self._embeddings.shape[0])
+
     def _save(self) -> None:
-        faiss.write_index(self.index, str(self.index_path))
         payload = {"chunks": [c.__dict__ for c in self._chunks]}
         self.meta_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+
+        if _HAS_FAISS:
+            faiss.write_index(self.index, str(self.index_path))
+        else:
+            # Cache embeddings for faster startup, but we can always regenerate.
+            if self._embeddings is None:
+                if self._chunks:
+                    self._embeddings = np.stack(
+                        [_stable_hash_embedding(c.text, self.dim) for c in self._chunks]
+                    ).astype(np.float32)
+                else:
+                    self._embeddings = np.zeros((0, self.dim), dtype=np.float32)
+            np.save(self._embeddings_path, self._embeddings)
 
     def add_documents(self, chunks: Iterable[DocChunk]) -> int:
         new_chunks = list(chunks)
@@ -70,7 +116,13 @@ class FaissVectorStore:
             return 0
 
         vecs = np.stack([_stable_hash_embedding(c.text, self.dim) for c in new_chunks]).astype(np.float32)
-        self.index.add(vecs)
+        if _HAS_FAISS:
+            self.index.add(vecs)
+        else:
+            if self._embeddings is None:
+                self._embeddings = np.zeros((0, self.dim), dtype=np.float32)
+            self._embeddings = np.vstack([self._embeddings, vecs])
+            self.index.ntotal = int(self._embeddings.shape[0])
         self._chunks.extend(new_chunks)
         self._save()
         return len(new_chunks)
@@ -79,10 +131,22 @@ class FaissVectorStore:
         if self.index.ntotal == 0:
             return []
         q = _stable_hash_embedding(query, self.dim).astype(np.float32)
-        scores, idx = self.index.search(np.expand_dims(q, 0), k)
-        result: list[DocChunk] = []
-        for i in idx[0]:
-            if i < 0 or i >= len(self._chunks):
-                continue
-            result.append(self._chunks[i])
-        return result
+
+        if _HAS_FAISS:
+            scores, idx = self.index.search(np.expand_dims(q, 0), k)
+            result: list[DocChunk] = []
+            for i in idx[0]:
+                if i < 0 or i >= len(self._chunks):
+                    continue
+                result.append(self._chunks[i])
+            return result
+
+        if self._embeddings is None:
+            self._embeddings = np.stack(
+                [_stable_hash_embedding(c.text, self.dim) for c in self._chunks]
+            ).astype(np.float32)
+            self.index.ntotal = int(self._embeddings.shape[0])
+
+        sims = self._embeddings @ q
+        top_idx = np.argsort(-sims)[:k]
+        return [self._chunks[int(i)] for i in top_idx if 0 <= int(i) < len(self._chunks)]
