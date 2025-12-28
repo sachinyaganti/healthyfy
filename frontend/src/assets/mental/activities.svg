@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.5" stop-color="#e0f2fe"/>
+      <stop offset="1" stop-color="#dcfce7"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="70%" cy="35%" r="70%">
+      <stop offset="0" stop-color="#22c55e" stop-opacity="0.20"/>
+      <stop offset="0.55" stop-color="#22c55e" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#22c55e" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <rect width="1200" height="600" fill="url(#glow)"/>
+
+  <!-- soft shapes -->
+  <circle cx="250" cy="170" r="150" fill="#2563eb" opacity="0.08"/>
+  <circle cx="980" cy="480" r="210" fill="#22c55e" opacity="0.10"/>
+
+  <!-- breathing rings -->
+  <g transform="translate(640 110)">
+    <circle cx="220" cy="190" r="120" fill="#ffffff" opacity="0.55"/>
+    <circle cx="220" cy="190" r="92" fill="none" stroke="#2563eb" stroke-opacity="0.28" stroke-width="14"/>
+    <circle cx="220" cy="190" r="62" fill="none" stroke="#22c55e" stroke-opacity="0.22" stroke-width="14"/>
+    <circle cx="220" cy="190" r="32" fill="#2563eb" opacity="0.14"/>
+  </g>
+
+  <!-- audio pills -->
+  <g transform="translate(160 340)">
+    <rect x="0" y="0" width="420" height="160" rx="28" fill="#ffffff" opacity="0.68" stroke="#e2e8f0"/>
+    <rect x="32" y="34" width="190" height="18" rx="9" fill="#0f172a" opacity="0.10"/>
+    <rect x="32" y="72" width="356" height="16" rx="8" fill="#2563eb" opacity="0.10"/>
+    <rect x="32" y="100" width="270" height="16" rx="8" fill="#22c55e" opacity="0.10"/>
+
+    <g transform="translate(330 48)" opacity="0.55">
+      <path d="M20 40V20l22-10v60L20 60Z" fill="#2563eb"/>
+      <path d="M52 26c10 10 10 38 0 48" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round"/>
+      <path d="M70 18c14 14 14 52 0 66" fill="none" stroke="#2563eb" stroke-width="8" stroke-linecap="round" opacity="0.65"/>
+    </g>
+  </g>
+
+  <!-- leaf mark -->
+  <g transform="translate(210 120)" opacity="0.7">
+    <path d="M160 240c-58-10-96-52-104-110C44 66 82 30 146 22c64-8 122 24 150 78 28 54 18 120-30 164-48 44-106 44-106 44Z" fill="#22c55e" opacity="0.16"/>
+    <path d="M90 170c44-52 92-80 144-86" stroke="#2563eb" stroke-opacity="0.45" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M96 176c42 6 86 26 132 64" stroke="#22c55e" stroke-opacity="0.45" stroke-width="10" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

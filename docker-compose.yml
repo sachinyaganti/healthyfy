@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: healthyfy-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: healthyfy
+      MYSQL_USER: healthyfy
+      MYSQL_PASSWORD: healthyfy
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  backend:
+    build:
+      context: ./backend
+    container_name: healthyfy-backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: mysql+pymysql://healthyfy:healthyfy@mysql:3306/healthyfy
+      VECTOR_DATA_DIR: /data
+      # Hosted LLM (optional)
+      # LLM_API_KEY: your_key
+      # LLM_BASE_URL: https://api.openai.com/v1
+      # LLM_MODEL: gpt-4o-mini
+    depends_on:
+      - mysql
+    ports:
+      - '8000:8000'
+    volumes:
+      - backend_data:/data
+
+volumes:
+  mysql_data:
+  backend_data:

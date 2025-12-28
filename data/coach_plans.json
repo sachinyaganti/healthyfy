@@ -1,0 +1,76 @@
+{
+  "plans": {
+    "108b698c-05df-4042-a8fa-7c582d580cfe": {
+      "plan_id": "108b698c-05df-4042-a8fa-7c582d580cfe",
+      "user_id": "demo",
+      "goal": "Reduce stress using 10-minute routines",
+      "created_at": "2025-12-28T01:35:56.417952Z",
+      "updated_at": "2025-12-28T01:35:56.417952Z",
+      "horizon_days": 7,
+      "plan_steps": [
+        "Clarify goal: Reduce stress using 10-minute routines (define what success looks like).",
+        "Pick 1–2 metrics you can track daily (minutes moved, water, mood, sleep).",
+        "Choose 2 tiny habits that fit your week (10–20 min).",
+        "Schedule those habits (specific days/times).",
+        "Run for 7 days, then review and adjust based on what actually happened."
+      ],
+      "next_actions": [
+        "Today: do the smallest version (10 minutes).",
+        "Tonight: log 1 metric (quick number).",
+        "Tomorrow: repeat; if missed, shrink the task and retry."
+      ],
+      "checkins": []
+    },
+    "8630b205-ba09-4fb4-a72e-5d75be720e2d": {
+      "plan_id": "8630b205-ba09-4fb4-a72e-5d75be720e2d",
+      "user_id": "demo",
+      "goal": "Reduce stress using 10-minute routines",
+      "created_at": "2025-12-28T01:37:31.668067Z",
+      "updated_at": "2025-12-28T01:37:31.668067Z",
+      "horizon_days": 7,
+      "plan_steps": [
+        "Clarify goal: Reduce stress using 10-minute routines (define what success looks like).",
+        "Pick 1–2 metrics you can track daily (minutes moved, water, mood, sleep).",
+        "Choose 2 tiny habits that fit your week (10–20 min).",
+        "Schedule those habits (specific days/times).",
+        "Run for 7 days, then review and adjust based on what actually happened."
+      ],
+      "next_actions": [
+        "Today: do the smallest version (10 minutes).",
+        "Tonight: log 1 metric (quick number).",
+        "Tomorrow: repeat; if missed, shrink the task and retry."
+      ],
+      "checkins": []
+    },
+    "d8426dbe-f691-43b3-8c6a-bed4f960da9c": {
+      "plan_id": "d8426dbe-f691-43b3-8c6a-bed4f960da9c",
+      "user_id": "demo",
+      "goal": "Reduce stress using 10-minute routines",
+      "created_at": "2025-12-28T01:45:18.058864Z",
+      "updated_at": "2025-12-28T01:45:18.415536Z",
+      "horizon_days": 7,
+      "plan_steps": [
+        "Clarify goal: Reduce stress using 10-minute routines (define what success looks like).",
+        "Pick 1–2 metrics you can track daily (minutes moved, water, mood, sleep).",
+        "Choose 2 tiny habits that fit your week (10–20 min).",
+        "Schedule those habits (specific days/times).",
+        "Run for 7 days, then review and adjust based on what actually happened."
+      ],
+      "next_actions": [
+        "Shrink the next step by 50% (time or difficulty).",
+        "Make it frictionless: prepare clothes/water the night before.",
+        "Choose 3 fixed days this week and protect them on your calendar."
+      ],
+      "checkins": [
+        {
+          "at": "2025-12-28T01:45:18.415063Z",
+          "adherence": 0.3,
+          "metrics": {
+            "moodAvg": 6
+          },
+          "notes": "Missed 3 days due to workload. Need easier plan."
+        }
+      ]
+    }
+  }
+}

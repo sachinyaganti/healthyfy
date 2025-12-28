@@ -1,0 +1,41 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+ENV/
+
+# Secrets / local overrides
+.env
+.env.*
+
+# --- Node / Vite (frontend) ---
+node_modules/
+dist/
+*.local
+
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.vscode/
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# --- Build / cache artifacts ---
+*.log
+
+# --- App runtime data (optional) ---
+# Uncomment if you don't want to commit local data artifacts
+# data/
+# backend/data/
