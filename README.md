@@ -7,22 +7,23 @@ Healthyfy is an **agentic ML system applied to the healthcare and fitness domain
   <img src="https://github.com/user-attachments/assets/7fa6f0ae-49d6-4219-846a-06403c0b0ff8" width="48%" />
   <img src="https://github.com/user-attachments/assets/ad7be33f-bf9e-41df-bc58-b20b337d9fed" width="48%" />
 </p>
-
+<br>
 
 
 <div align="center">
 
-<h2>🌱 Healthyfy — Your Agentic AI Partner for Personalized Wellness</h2>
+<h1>🌱 Healthyfy</h1>
+<h3>Your Agentic AI Partner for Personalized Wellness & Lifestyle Support</h3>
 
-<pre>
-🔗 https://healthyfy-ai.netlify.app/login
-</pre>
+<a href="https://healthyfy-ai.netlify.app/login" target="_blank">
+  <img src="https://img.shields.io/badge/LIVE%20DEMO-CLICK%20HERE-2ecc71?style=for-the-badge&logo=netlify&logoColor=white" />
+</a>
 
 </div>
+<br>
+<br>
 
-
-
-<img width="1919" height="1000" alt="image" src="https://github.com/user-attachments/assets/8951c6d7-1485-4346-a3ed-0a479f1b730d" />
+<img width="1919" height="1000" alt="image" src="https://github.com/user-attachments/assets/8951c6d7-1485-4346-a3ed-0a479f1b730d" /><br>
 
 - A Vite/React frontend for daily logging, dashboards, and a floating chatbot
 - A FastAPI backend that provides “AI-style” coaching endpoints (with safety guardrails)
