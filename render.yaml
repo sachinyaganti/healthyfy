@@ -4,33 +4,16 @@ services:
     runtime: python
     plan: free
     autoDeploy: true
+
     buildCommand: pip install -r backend/requirements.txt
     startCommand: uvicorn app.main:app --app-dir backend --host 0.0.0.0 --port $PORT
+
     envVars:
-      # Allow your Netlify domain(s) to call the API.
-      # Example: https://your-site.netlify.app
       - key: CORS_ORIGINS
         value: ""
 
-      # Where to persist FAISS + coach plan data (use a disk below).
+      # Use temp directory instead of persistent disk
       - key: VECTOR_DATA_DIR
-        value: /var/data
+        value: /tmp
       - key: COACH_DATA_DIR
-        value: /var/data
-
-      # Optional hosted LLM settings
-      # - key: LLM_API_KEY
-      #   sync: false
-      # - key: LLM_BASE_URL
-      #   value: https://api.openai.com/v1
-      # - key: LLM_MODEL
-      #   value: gpt-4o-mini
-
-      # Optional DB: if not set, backend will still start (DB init is skipped)
-      # - key: DATABASE_URL
-      #   sync: false
-
-    disk:
-      name: healthyfy-data
-      mountPath: /var/data
-      sizeGB: 1
+        value: /tmp
