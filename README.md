@@ -1,86 +1,176 @@
-# Healthyfy
+# 🌱 Healthyfy
+<div align="center">
+Your Agentic AI Partner for Personalized Wellness & Lifestyle Support
 
-Healthyfy is an **agentic ML system applied to the healthcare and fitness domain** (non-clinical), delivered as a **non-medical wellness & lifestyle support platform** with:
+An **Agentic Machine Learning System** applied to the **Healthcare & Fitness domain**  
+(*Strictly non-clinical wellness & lifestyle support*)
+
+<br/>
+
+<div align="center">
+  <a href="https://healthyfy-ai.netlify.app/login" target="_blank">
+    <img src="https://img.shields.io/badge/🚀%20Live%20Demo-Healthyfy-2ecc71?style=for-the-badge&logo=netlify&logoColor=white"/>
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://youtu.be/DUPmAD7GN4s?si=I0UUS0XRvbQHCh52" target="_blank">
+    <img src="https://img.shields.io/badge/▶️%20YouTube%20Demo-Watch%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/>
+  </a>
+</div>
 
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/7fa6f0ae-49d6-4219-846a-06403c0b0ff8" width="48%" />
-  <img src="https://github.com/user-attachments/assets/ad7be33f-bf9e-41df-bc58-b20b337d9fed" width="48%" />
-</p>
-<br>
+<br/><br/>
 
+</div>
+
+---
+
+## 📌 Overview
 
 <div align="center">
 
-<h1>🌱 Healthyfy</h1>
-<h3>Your Agentic AI Partner for Personalized Wellness & Lifestyle Support</h3>
+Healthyfy is a **working agentic AI prototype** that demonstrates how modern  
+**agent-based systems** can reason, plan, and adapt autonomously to support:
 
-<a href="https://healthyfy-ai.netlify.app/login" target="_blank">
-  <img src="https://img.shields.io/badge/LIVE%20DEMO-CLICK%20HERE-2ecc71?style=for-the-badge&logo=netlify&logoColor=white" />
-</a>
+🏃 Fitness • 🥗 Nutrition • 🧘 Mental Wellness • ❤️ Chronic Lifestyle Support
 
 </div>
+
+> ⚠️ **Disclaimer:** Healthyfy provides **wellness and lifestyle guidance only**.  
+> It does **NOT** diagnose, treat, prescribe, or replace professional medical advice.
+
+---
+
+## 🧠 Why Healthyfy is an *Agentic ML System*
+
+<div align="center">
+
+| Capability | Description |
+|-----------|-------------|
+| 🧭 Decision Logic | Intelligent routing with safety guardrails |
+| 🔁 Agentic Planning | Goal creation + adaptive check-in loops |
+| 📈 Machine Learning | Lightweight forecasting endpoint |
+| 💬 LLM Integration | Optional hosted or offline deterministic mode |
+| 🛡️ Guardrails | Enforced non-medical constraints |
+
+</div>
+
+---
+
+## 🏗️ System Architecture
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/7fa6f0ae-49d6-4219-846a-06403c0b0ff8" width="45%" />
+  <img src="https://github.com/user-attachments/assets/8951c6d7-1485-4346-a3ed-0a479f1b730d" width="45%" />
+</div>
+
+**High-level flow:**
+
+1️⃣ User interacts with the React UI  
+2️⃣ Requests routed through backend orchestrator  
+3️⃣ Domain agents handle tasks (fitness, nutrition, mental, chronic)  
+4️⃣ Safety rules enforce non-clinical responses  
+5️⃣ Optional ML / Retrieval / LLM components enhance outputs  
+
+---
+
+## 🛠️ Technology Stack
+
+<div align="center">
+
+### 🎨 Frontend
+<img src="https://skillicons.dev/icons?i=react,vite,tailwind,ts" />
+
+<br/><br/>
+
+### ⚙️ Backend
+<img src="https://skillicons.dev/icons?i=python,fastapi" />
+
+<br/><br/>
+
+### 🗄️ Data & ML
+<img src="https://skillicons.dev/icons?i=mysql,docker" />
+
+<br/><br/>
+
+### 🔍 Retrieval & AI
+<img src="https://img.shields.io/badge/FAISS-Vector%20Search-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/LLM-Optional%20Offline-green?style=for-the-badge"/>
+
+</div>
+
+---
+
+## ✨ Key Features
+
+<div align="center">
+
+| Feature | Description |
+|------|------------|
+| 📊 Unified Dashboard | All wellness domains in one place |
+| 📝 Local Logging | Fast, privacy-friendly (localStorage) |
+| ⚡ AI Quick Suggestions | One-click AI-powered guidance |
+| 🎯 Goal Coach | Multi-step planning & adaptation |
+| 🔎 Knowledge Retrieval | Wellness document search |
+| 📈 ML Forecasting | Simple explainable predictions |
+
+</div>
+
+---
+
+## 🔁 Example User Flows
+
+### 🧪 Flow 1 — Login & Dashboard
+- Demo auth (frontend-only)
+- Access unified wellness dashboard
+
+### ⚡ Flow 2 — AI Quick Suggestions
+- Fitness plan
+- Nutrition guidance
+- Breathing exercise
+- Journal prompts
+
+### 🎯 Flow 3 — Goal Coach Loop
+1. Create a wellness goal  
+2. Receive a structured plan  
+3. Submit periodic check-ins  
+4. Plan adapts automatically  
+
+---
+
+## 📡 Core API Endpoints
+
+<div align="center">
+
+| Endpoint | Purpose |
+|--------|--------|
+| `GET /health` | Service health check |
+| `POST /api/chat` | Agentic chatbot |
+| `POST /api/fitness/plan` | Fitness guidance |
+| `POST /api/nutrition/plan` | Nutrition guidance |
+| `POST /api/mental/breathing` | Guided breathing |
+| `POST /api/chronic/support` | Lifestyle support |
+| `POST /api/ml/forecast` | ML prediction |
+| `POST /api/coach/goal` | Create goal plan |
+| `POST /api/coach/checkin` | Adaptive updates |
+
+</div>
+
+---
+
+## 🗂️ Repository Structure
+
+```text
+healthyfy/
+├── frontend/        # React + Vite application
+├── backend/         # FastAPI backend (agentic logic)
+├── data/            # Coach plans & retrieval cache
+├── docker-compose.yml
+└── README.md
+```
+
 <br>
-<br>
 
-<img width="1919" height="1000" alt="image" src="https://github.com/user-attachments/assets/8951c6d7-1485-4346-a3ed-0a479f1b730d" /><br>
-
-- A Vite/React frontend for daily logging, dashboards, and a floating chatbot
-- A FastAPI backend that provides “AI-style” coaching endpoints (with safety guardrails)
-- Optional MySQL persistence (SQLAlchemy) and local retrieval (FAISS or a Windows-safe fallback)
-
-**Disclaimer (important):** Healthyfy provides wellness and lifestyle support only. It does **not** diagnose, treat, prescribe, or replace professional medical advice.
-
-## Why this is an “agentic ML system”
-
-Healthyfy is designed around an **agentic backend**: user requests are routed through an orchestrator, guarded by safety rules, and handled by specialized “domain agents” (fitness, nutrition, mental wellness, chronic support, and goal coaching). The system combines:
-
-- **Decision logic** (routing + safety guardrails)
-- **Agentic planning/autonomy** (Goal Coach plan generation + iterative check-ins)
-- **ML** (a lightweight forecasting endpoint)
-- **LLM integration (optional)** via a pluggable client (can run offline)
-
-This is intentionally scoped to wellness and fitness support rather than clinical decision-making.
-
-## What the system does (functionality)
-
-- **Unified wellness dashboard**: fitness, nutrition, mental wellness, and chronic-support tracking in one place.
-- **Local logging + insights**: most user logs are stored in the browser (localStorage) and summarized into small “insights”.
-- **AI quick suggestions**: one-click calls to backend endpoints for:
-	- Fitness plan suggestions
-	- Nutrition plan suggestions
-	- Guided breathing session text
-	- Journal prompts
-	- Chronic-condition support suggestions
-- **Goal Coach loop**: create a goal plan, then submit periodic check-ins to adapt it.
-- **Wellness retrieval**: retrieve relevant snippets from seed wellness documents (FAISS when available; deterministic fallback on Windows).
-
-## System assumptions
-
-- **Not medical**: responses are constrained to non-medical lifestyle guidance; guardrails should redirect medical questions.
-- **Auth is frontend-only**: login/register is implemented client-side (localStorage). The backend does not validate sessions/tokens.
-- **User data storage**:
-	- Primary: browser localStorage for most logs and the “session”.
-	- Coach plans: persisted as JSON (defaults to `data/coach_plans.json`).
-	- Database: MySQL is optional for dev; the backend will still start if DB isn’t available (DB initialization is skipped).
-- **Vector search on Windows**: FAISS may be unavailable locally. In that case, retrieval uses a deterministic embedding fallback (runnable everywhere, but less semantically accurate).
-
-## Tech stack
-
-- Frontend: Vite + React, Tailwind CSS, Framer Motion
-- Backend: Python 3.10+, FastAPI, Uvicorn, Pydantic
-- DB: MySQL (SQLAlchemy + PyMySQL)
-- Retrieval: FAISS (when available) + local fallback on Windows
-
-## Repo structure
-
-- `frontend/` — React app
-- `backend/` — FastAPI app
-- `docker-compose.yml` — MySQL + backend container (dev)
-
-## How to run (local development)
-
-You have two supported ways to run the app locally.
+▶️ Running Locally (Development)
 
 ### Option A — Run using VS Code Tasks (this matches what you just did)
 
@@ -187,67 +277,12 @@ PowerShell example:
 $env:VITE_API_BASE = "http://127.0.0.1:8004"
 ```
 
-## Example interaction flows
 
-### Flow 1 — Login/Register (demo auth)
 
-1) Open the frontend and create a user in the Register page.
-2) Login; the session is stored in localStorage.
-3) Navigate to the Unified Dashboard.
+⚠️ Limitations
 
-### Flow 2 — Daily tracking → insights
+🔐 Frontend-only authentication
 
-1) Log items (meals, water, mood, workouts, symptoms, reminders).
-2) View domain dashboards and the unified dashboard KPIs.
-3) Insights update immediately because the data is localStorage-backed.
+🏥 Non-medical scope (by design)
 
-### Flow 3 — “AI quick suggestions”
-
-1) In the Unified Dashboard, choose an action (fitness plan / nutrition plan / breathing / journal / chronic support).
-2) The frontend calls the backend (e.g., `/api/fitness/plan`).
-3) The backend returns structured guidance and the UI displays it.
-
-### Flow 4 — Goal Coach plan + check-ins
-
-1) Create a goal plan (e.g., “walk 30 min daily for 7 days”).
-2) Receive a plan ID.
-3) Submit check-ins with adherence and notes; the backend updates the plan.
-4) The plan state persists to JSON in `data/coach_plans.json` by default.
-
-## Key API endpoints
-
-- `GET /health`
-- `POST /api/chat` — orchestrated chatbot (guardrails + domain agents)
-- `POST /api/fitness/plan`
-- `POST /api/nutrition/plan`
-- `POST /api/mental/breathing`
-- `GET /api/mental/journal-prompt`
-- `POST /api/chronic/support`
-- `POST /api/wellness/retrieve` — retrieval over seed wellness docs
-- `POST /api/ml/forecast` — simple trend forecast (linear regression)
-- `POST /api/coach/goal` — create a goal plan
-- `POST /api/coach/checkin` — submit a check-in
-- `GET /api/coach/state/{plan_id}` — fetch persisted plan state
-
-## Limitations
-
-- **Security/auth**: frontend-only auth (localStorage) is not production-safe; backend does not enforce identity.
-- **Medical scope**: intentionally constrained to wellness guidance; not a clinical tool.
-- **Vector search quality on Windows**: deterministic fallback is runnable but less semantically accurate than real embeddings/FAISS.
-- **Persistence model**: much of the user data is local to the browser; clearing storage clears most history.
-- **Single-node architecture**: local file persistence (coach JSON, vector cache) isn’t shared across instances.
-
-## Future improvements
-
-- Replace demo auth with real authentication (server-issued sessions/JWT, password reset, RBAC).
-- Move logs/history to a proper backend store (per-user DB tables), add export/import.
-- Add proper embeddings + hosted/vector database option (e.g., pgvector, Pinecone) for better retrieval.
-- Add structured evaluation tests for guardrails and agent outputs.
-- Add observability (request tracing, prompt logging with redaction, metrics).
-
-## Deploy (high level)
-
-- Frontend can be deployed to Netlify (see `netlify.toml`).
-- Backend must be deployed separately (Render/Fly.io/Azure/App Service/etc.).
-- Set `VITE_API_BASE` in the frontend environment to point to the deployed backend.
-- Configure backend `CORS_ORIGINS` to include your frontend origin.
+🗄️ Full backend persistence
