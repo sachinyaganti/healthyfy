@@ -92,10 +92,6 @@ Healthyfy is a **working agentic AI prototype** that demonstrates how modern
 
 <br/><br/>
 
-### 🔍 Retrieval & AI
-<img src="https://img.shields.io/badge/FAISS-Vector%20Search-blue?style=for-the-badge"/>
-<img src="https://img.shields.io/badge/LLM-Optional%20Offline-green?style=for-the-badge"/>
-
 </div>
 
 ---
